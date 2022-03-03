@@ -1,5 +1,6 @@
 .content {
-  padding: 40px 60px;
+  /* padding: 40px 60px; */
+  width: calc(100% - 60px);
 }
 
 /* SIDEBAR */
@@ -33,6 +34,9 @@ button {
   /* padding: 20px 10px 0 10px; */
   color: white;
   transition: 0.4s ease-in;
+  height: 100%;
+  position: fixed;
+  z-index: 10;
 }
 .sidebar-closed {
   min-width: 60px;

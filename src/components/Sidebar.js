@@ -1,22 +1,40 @@
-import React, { useState } from "react";
-import './Sidebar.css'
+import React, { useState, useEffect } from "react";
+import './Sidebar.css';
+import firebase from 'firebase/app';
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars , faHome , faShoppingBag , faTruck , faHeart , faUserCircle , faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import cx from "classnames";
 import { Link } from "react-router-dom";
 
-const menuItems = [
-    { title: "Home", icon: faHome, to: "/" },
-    { title: "Cart", icon: faShoppingBag, to: "/cart" },
-    { title: "My Orders", icon: faTruck, to: "/orders" },
-    { title: "Wish List", icon: faHeart, to: "/wish" },
-    { title: "Account", icon: faUserCircle, to: "/account" },
-    { title: "Constact us", icon: faEnvelope, to: "/contact" }
-];
-
 function Sidebar(){
+
     const [isOpen, setIsOpen] = useState(false);
+    const [isSignin, setIsSignin] = useState(false);
+
+    const menuItems = [
+        { title: "Home", icon: faHome, to: "/" },
+        { title: "Cart", icon: faShoppingBag, to: "/cart" },
+        { title: "My Orders", icon: faTruck, to: "/orders" },
+        { title: "Wish List", icon: faHeart, to: "/wish" },
+        { title: "Account", icon: faUserCircle, to: isSignin ? "/account" : '/login' },
+        { title: "Constact us", icon: faEnvelope, to: "/contact" }
+    ];
+
+    const userState = ()=>{
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                setIsSignin(true);
+            } else {
+                setIsSignin(false);
+            }
+        });
+    }
+
+    useEffect(()=>{
+        userState()
+    },[isSignin])
+
     return (
         <div className={cx("sidebar", { "sidebar-closed": !isOpen })}>
             <button className={"toggle_button"} onClick={() => setIsOpen(!isOpen)}>

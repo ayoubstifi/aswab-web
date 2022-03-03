@@ -2,13 +2,11 @@ import { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route,Link } from "react-router-dom";
 import './App.css'
-
-
 import Sidebar from './components/Sidebar';
 import Content from './components/Content';
-import Product from './components/Product';
-
+import React from 'react' 
 import firebase from 'firebase';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCFrtzv3lsw4B42I9XLxOnCtk5AVVp3RbU',
   authDomain: "aswak-app-a2249.firebaseapp.com",
@@ -21,6 +19,7 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } 
+const auth = firebase.auth();
 
 function App() {
 
@@ -28,9 +27,8 @@ function App() {
     <Router>
       <div className="App">
         <Sidebar />
-        <div>
+        <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}} >
           <Content />
-          <Product/>
         </div>
       </div>
     </Router>
